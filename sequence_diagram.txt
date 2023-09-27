@@ -1,0 +1,23 @@
+You can use this sequence diagram in the web site https://sequencediagram.org/
+
+participant App
+participant Test API
+participant Production API
+
+App->Test API: GET /utilita?sensor=<>&phase=1&from_date=<>&to_date=<>
+
+Test API->App: 200, List[ALSUtilitaGet]
+
+App->Production API: GET /utilita?sensor=<>&phase=1&from_date=<>&to_date=<>
+
+Production API->App: 200, List[ALSUtilitaGet]
+
+note over App: Verify the missing label\nin production environment
+
+group Loop over missing labels
+
+App->Production API: POST /utilita\nALSUtilitaPost
+
+Production API->App: 200
+
+end
